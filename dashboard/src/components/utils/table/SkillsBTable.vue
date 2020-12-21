@@ -67,25 +67,29 @@ limitations under the License.
       </template>
 
     </b-table>
-    <div v-if="!options.busy" class="row m-1 p-0 align-items-center">
+    <div v-if="!options.busy && !options.pagination.remove" class="row m-1 p-0 align-items-center">
       <div class="col-md text-center text-md-left">
         <span class="text-muted">Total Rows:</span> <strong data-cy="skillsBTableTotalRows">{{ totalRows | number }}</strong>
       </div>
       <div class="col-md my-3 my-md-0">
-        <b-pagination v-model="currentPageInternal" :total-rows="totalRows"
-                      :per-page="pageSizeInternal" slot-scope=""
-                      pills align="center" size="sm" variant="info" class="customPagination m-0 p-0"
-                      :disabled="disabled" data-cy="skillsBTablePaging">
-        </b-pagination>
+        <span v-if="!options.pagination.remove">
+          <b-pagination v-model="currentPageInternal" :total-rows="totalRows"
+                        :per-page="pageSizeInternal" slot-scope=""
+                        pills align="center" size="sm" variant="info" class="customPagination m-0 p-0"
+                        :disabled="disabled" data-cy="skillsBTablePaging">
+          </b-pagination>
+        </span>
       </div>
       <div class="col-md text-center text-md-right">
-        <span class="text-muted">Per page:</span>
-        <b-form-select v-model="pageSizeInternal" :options="options.pagination.possiblePageSizes"
-                       size="sm" class="mx-2" style="width: 4rem;" :disabled="disabledPaging"
-                       data-cy="skillsBTablePageSize"/>
-<!--        <b-button size="sm" v-b-tooltip.hover title="Download CSV" variant="outline-info" :disabled="disabled">-->
-<!--          <i class="fas fa-download"></i>-->
-<!--        </b-button>-->
+        <span v-if="!options.pagination.remove">
+          <span class="text-muted">Per page:</span>
+          <b-form-select v-model="pageSizeInternal" :options="options.pagination.possiblePageSizes"
+                         size="sm" class="mx-2" style="width: 4rem;" :disabled="disabledPaging"
+                         data-cy="skillsBTablePageSize"/>
+  <!--        <b-button size="sm" v-b-tooltip.hover title="Download CSV" variant="outline-info" :disabled="disabled">-->
+  <!--          <i class="fas fa-download"></i>-->
+  <!--        </b-button>-->
+          </span>
       </div>
     </div>
   </div>
